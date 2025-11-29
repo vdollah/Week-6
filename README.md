@@ -70,4 +70,15 @@ int main() {
     return 0;
 }
 
+------------------------------------------------------------------------------
+
+creates a dynamic array of Item structs,
+
+fills it with 100 sample items,
+
+asks the user for an ID,
+
+uses binary search to find and print the matching item,
+
+and frees the dynamic memory at the end.
 
