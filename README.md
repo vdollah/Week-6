@@ -1,1 +1,2 @@
+For Module 7 I worked with pointers and memory. I made a struct called Item that stores a name and an id. Then I used new to make an array of 100 Item records. Each record has a name and an id, and the ids are sorted so binary search can work. The user enters an id to look for and the program runs a binary search to try to find it. If the id is in the list, the program prints the item info. If not, it says the item was not found. At the end the memory is cleared with delete[].
 
