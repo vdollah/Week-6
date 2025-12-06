@@ -2,36 +2,27 @@
 #include <string>
 using namespace std;
 
-// Struct for each inventory item
 struct Item {
     string name;
     int id;
 };
 
-// Fill the array with sorted sample data
-// The ids go from 1000 to 1099, and names are "Item 0", "Item 1", ...
-void fillInventory(Item* inventory, int size) {
-    for (int i = 0; i < size; ++i) {
-        inventory[i].id = 1000 + i;                 // increasing ids
-        inventory[i].name = "Item " + to_string(i); // simple names
-    }
-}
-
-// Binary search by id
-// Returns the index if found, or -1 if not found
-int binarySearchById(Item* inventory, int size, int targetId) {
+// Binary search to find an item by ID
+int binarySearch(Item items[], int size, int searchID) {
     int left = 0;
     int right = size - 1;
 
     while (left <= right) {
         int mid = (left + right) / 2;
 
-        if (inventory[mid].id == targetId) {
-            return mid; // found
-        } else if (targetId < inventory[mid].id) {
-            right = mid - 1; // look in left half
-        } else {
-            left = mid + 1;  // look in right half
+        if (items[mid].id == searchID) {
+            return mid;
+        }
+        else if (searchID < items[mid].id) {
+            right = mid - 1;
+        }
+        else {
+            left = mid + 1;
         }
     }
 
@@ -39,46 +30,38 @@ int binarySearchById(Item* inventory, int size, int targetId) {
 }
 
 int main() {
-    const int NUM_ITEMS = 100;
 
-    // Dynamically allocate an array of Items on the heap
-    Item* inventory = new Item[NUM_ITEMS];
+    int size = 100;
 
-    // Populate the array with sorted sample data
-    fillInventory(inventory, NUM_ITEMS);
+    // Allocate memory for 100 items
+    Item* inventory = new Item[size];
 
-    // Ask user for an ID to search for
-    int searchId;
-    cout << "Enter an item ID to search for (1000 - 1099): ";
-    cin >> searchId;
-
-    // Use binary search to find the item
-    int index = binarySearchById(inventory, NUM_ITEMS, searchId);
-
-    if (index != -1) {
-        cout << "Item found!" << endl;
-        cout << "Index: " << index << endl;
-        cout << "Name: " << inventory[index].name << endl;
-        cout << "ID: " << inventory[index].id << endl;
-    } else {
-        cout << "Item with ID " << searchId << " was not found." << endl;
+    // Fill the array with sorted IDs and names
+    // IDs go from 1 to 100
+    for (int i = 0; i < size; i++) {
+        inventory[i].id = i + 1;
+        inventory[i].name = "Item_" + to_string(i + 1);
     }
 
-    // Free the memory
+    // Ask user to search for an ID
+    int searchID;
+    cout << "Enter an ID to search for (1 - 100): ";
+    cin >> searchID;
+
+    // Run binary search
+    int result = binarySearch(inventory, size, searchID);
+
+    if (result != -1) {
+        cout << "Item found:\n";
+        cout << "Name: " << inventory[result].name << endl;
+        cout << "ID: " << inventory[result].id << endl;
+    } 
+    else {
+        cout << "Item not found.\n";
+    }
+
+    // Free memory
     delete[] inventory;
 
     return 0;
 }
-
-------------------------------------------------------------------------------
-
-creates a dynamic array of Item structs,
-
-fills it with 100 sample items,
-
-asks the user for an ID,
-
-uses binary search to find and print the matching item,
-
-and frees the dynamic memory at the end.
-
